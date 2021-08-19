@@ -2,30 +2,29 @@
 
 ## publishing to Circle CI
 
-1. claim the namespace
+1. pull the repository
 
 ```bash
-circleci namespace create purple-technology github purple-technology
+git pull git@github.com:Revolgy-Business-Solutions/circle-eks-helpers.git
 ```
 
-2. create the orb
+2. update the orb yaml file
 
-```bash
-circleci orb create purple-technology/eks-helpers
-```
 
 3. create the development version
 
 ```bash
-circleci orb publish k8s.yml purple-technology/eks-helpers@dev:0.0.1
+circleci orb publish k8s.yml purple-technology/eks-helpers@dev:0.0.2(3,4,...)
 ```
 
 4. promote development version to the production release
 
 ```bash
-circleci orb publish promote purple-technology/eks-helpers@dev:0.0.1 patch
+circleci orb publish promote purple-technology/eks-helpers@dev:0.0.2 patch
 
 ```
+5. push the changes back to the repository
+
 
 ## EKS specific helpers
 
