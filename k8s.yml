@@ -168,15 +168,11 @@ commands:
             <</ parameters.install_aws_authenticator >>
             helm init -c --stable-repo-url https://charts.helm.sh/stable
             <<# parameters.install_helm_s3_plugin >>
-            git clone https://github.com/hypnoglow/helm-s3.git ~/.helm/plugins/helm-s3.git
-            export helm_s3_version="0.10.0"
-            export helm_s3_binary_url="https://github.com/hypnoglow/helm-s3/releases/download/v${helm_s3_version}/helm-s3_${helm_s3_version}_linux_amd64.tar.gz"
-            curl -sSL -o /tmp/helm-s3.tar.gz "${helm_s3_binary_url}"
-            tar -xzvf /tmp/helm-s3.tar.gz -C /tmp/
-            mkdir ~/.helm/plugins/helm-s3.git/bin/
-            mv /tmp/bin/helms3 ~/.helm/plugins/helm-s3.git/bin/
-            pwd
-            ls -la
+            echo $PATH
+            echo 'export PATH=/usr/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
+            echo $PATH
+            helm plugin install https://github.com/hypnoglow/helm-s3.git
             <</ parameters.install_helm_s3_plugin >>
 
 jobs:
