@@ -14,14 +14,13 @@ git pull git@github.com:Revolgy-Business-Solutions/circle-eks-helpers.git
 3. create the development version
 
 ```bash
-circleci orb publish k8s.yml  revolgy-business-solutions/eks-helpers@dev:0.0.2(3,4,...)
+circleci orb publish k8s.yml revolgy-business-solutions/eks-helpers@dev:0.0.2(3,4,...)
 ```
 
 4. promote development version to the production release
 
 ```bash
-circleci orb publish promote  revolgy-business-solutions/eks-helpers@dev:0.0.2 patch
-
+circleci orb publish promote revolgy-business-solutions/eks-helpers@dev:0.0.2 patch
 ```
 5. push the changes back to the repository
 
