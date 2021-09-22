@@ -21,7 +21,6 @@ circleci orb publish k8s.yml revolgy-business-solutions/eks-helpers@dev:0.0.2(3,
 
 ```bash
 circleci orb publish promote revolgy-business-solutions/eks-helpers@dev:0.0.2 patch
-
 ```
 5. push the changes back to the repository
 
