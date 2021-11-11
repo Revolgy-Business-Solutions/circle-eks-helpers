@@ -750,7 +750,7 @@ jobs:
             echo "release name: ${release_name}"
 
             # perform Helm operation
-            if helm list | grep -q "${release_name}";
+            if helm list | grep "${release_name}" | grep -q -v "FAILED";
             then
                 helm upgrade \
                 --values << parameters.values_path >> \
@@ -764,7 +764,6 @@ jobs:
                 --set "image.tag=<< parameters.docker_image_tag >>" \
                 <<# parameters.preview >>--set "preview.enabled=true"<</ parameters.preview >> \
                 --install \
-                --atomic \
                 <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
                 <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
@@ -786,7 +785,6 @@ jobs:
                 <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
                 <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
-                --atomic \
                 --name "${release_name}" \
                 --namespace "${release_name}" \
                 /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
