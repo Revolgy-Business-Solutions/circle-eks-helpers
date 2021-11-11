@@ -760,10 +760,8 @@ jobs:
                 --set "app.build=${CIRCLE_BUILD_NUM}" \
                 --set "app.branch=${CIRCLE_BRANCH}" \
                 <<# parameters.helm_release_suffix >>--set "app.releaseSuffix=<< parameters.helm_release_suffix >>"<</ parameters.helm_release_suffix >> \
-                --set "image.fpm.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_fpm_name >>" \
-                --set "image.fpm.tag=<< parameters.docker_image_fpm_tag >>" \
-                --set "image.nginx.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_nginx_name >>" \
-                --set "image.nginx.tag=<< parameters.docker_image_nginx_tag >>" \
+                --set "image.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_name >>" \
+                --set "image.tag=<< parameters.docker_image_tag >>" \
                 <<# parameters.preview >>--set "preview.enabled=true"<</ parameters.preview >> \
                 --install \
                 --atomic \
@@ -782,10 +780,8 @@ jobs:
                 --set "app.build=${CIRCLE_BUILD_NUM}" \
                 --set "app.branch=${CIRCLE_BRANCH}" \
                 <<# parameters.helm_release_suffix >>--set "app.releaseSuffix=<< parameters.helm_release_suffix >>"<</ parameters.helm_release_suffix >> \
-                --set "image.fpm.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_fpm_name >>" \
-                --set "image.fpm.tag=<< parameters.docker_image_fpm_tag >>" \
-                --set "image.nginx.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_nginx_name >>" \
-                --set "image.nginx.tag=<< parameters.docker_image_nginx_tag >>" \
+                --set "image.repository=<< parameters.aws_account_id >>.dkr.ecr.<< parameters.aws_region >>.amazonaws.com/<< parameters.docker_image_name >>" \
+                --set "image.tag=<< parameters.docker_image_tag >>" \
                 <<# parameters.preview >>--set "preview.enabled=true"<</ parameters.preview >> \
                 <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
