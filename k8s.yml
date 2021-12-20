@@ -11,7 +11,7 @@ executors:
       - image: alpine:3.9
   build:
     docker:
-      - image: docker:18.09.6
+      - image: docker:19.03.13
   helm:
     docker:
       - image: alpine/helm:2.13.1
@@ -203,7 +203,8 @@ jobs:
             pip3 install awscli > /dev/null 2>&1
       - checkout
       - pull_submodules
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: build docker image
           command: |

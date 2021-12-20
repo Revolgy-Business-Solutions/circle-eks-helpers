@@ -5,7 +5,7 @@
 1. pull the repository
 
 ```bash
-git pull git@github.com:Revolgy-Business-Solutions/circle-eks-helpers.git
+git clone git@github.com:Revolgy-Business-Solutions/circle-eks-helpers.git
 ```
 
 2. update the orb yaml file
