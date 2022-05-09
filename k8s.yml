@@ -14,7 +14,7 @@ executors:
       - image: docker:19.03.13
   helm:
     docker:
-      - image: alpine/helm:2.13.1
+      - image: alpine/k8s:1.21.5
 
 commands:
   configure_aws:
@@ -122,7 +122,7 @@ commands:
             unset AWS_SECRET_ACCESS_KEY
             mkdir -p /tmp/out
             helm repo add << parameters.helm_s3_local_name >> << parameters.helm_s3_bucket >>
-            helm search << parameters.helm_s3_local_name >>/ --versions
+            helm search << parameters.helm_s3_local_name >>
             helm fetch \
               --version << parameters.helm_chart_version >> \
               --destination /tmp/out \
@@ -166,7 +166,6 @@ commands:
             wget << parameters.aws_authenticator_release_url >> -O /usr/local/bin/aws-iam-authenticator
             chmod +x /usr/local/bin/aws-iam-authenticator
             <</ parameters.install_aws_authenticator >>
-            helm init -c --stable-repo-url https://charts.helm.sh/stable
             <<# parameters.install_helm_s3_plugin >>
             echo $PATH
             echo 'export PATH=/usr/bin:$PATH' >> $BASH_ENV
