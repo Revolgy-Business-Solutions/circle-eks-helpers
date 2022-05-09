@@ -14,7 +14,7 @@ executors:
       - image: docker:19.03.13
   helm:
     docker:
-      - image: alpine/helm:2.13.1
+      - image: alpine/k8s:1.21.5
 
 commands:
   configure_aws:
@@ -122,7 +122,7 @@ commands:
             unset AWS_SECRET_ACCESS_KEY
             mkdir -p /tmp/out
             helm repo add << parameters.helm_s3_local_name >> << parameters.helm_s3_bucket >>
-            helm search << parameters.helm_s3_local_name >>/ --versions
+            helm search << parameters.helm_s3_local_name >>
             helm fetch \
               --version << parameters.helm_chart_version >> \
               --destination /tmp/out \
@@ -166,7 +166,6 @@ commands:
             wget << parameters.aws_authenticator_release_url >> -O /usr/local/bin/aws-iam-authenticator
             chmod +x /usr/local/bin/aws-iam-authenticator
             <</ parameters.install_aws_authenticator >>
-            helm init -c --stable-repo-url https://charts.helm.sh/stable
             <<# parameters.install_helm_s3_plugin >>
             echo $PATH
             echo 'export PATH=/usr/bin:$PATH' >> $BASH_ENV
@@ -493,8 +492,8 @@ jobs:
             <</ parameters.kubernetes_namespace_override >>
 
             # show calculated values in the console
-            echo "namespace: ${namespace}"
-            echo "release name: ${release_name}"
+            echo namespace: ${namespace}
+            echo release name: ${release_name}
             
             # perform Helm operation
             helm upgrade \
@@ -514,7 +513,7 @@ jobs:
               <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
               <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
               <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
-              --namespace "${release_name}" \
+              --namespace "${release_name}"  --create-namespace \
               "${release_name}" /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
 
   helm_deploy_node_simple:
@@ -621,8 +620,8 @@ jobs:
             <</ parameters.kubernetes_namespace_override >>
 
             # show calculated values in the console
-            echo "namespace: ${namespace}"
-            echo "release name: ${release_name}"
+            echo namespace: ${namespace}
+            echo release name: ${release_name}
 
             # perform Helm operation
             helm upgrade \
@@ -640,7 +639,7 @@ jobs:
               <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
               <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
               <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
-              --namespace "${namespace}" \
+              --namespace "${namespace}"  --create-namespace \
               "${release_name}" /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
 
   helm_deploy_node_logic:
@@ -747,8 +746,8 @@ jobs:
             <</ parameters.kubernetes_namespace_override >>
 
             # show calculated values in the console
-            echo "namespace: ${namespace}"
-            echo "release name: ${release_name}"
+            echo namespace: ${namespace}
+            echo release name: ${release_name}
 
             # perform Helm operation
             if helm list | grep "${release_name}" | grep -q -v "FAILED";
@@ -768,7 +767,7 @@ jobs:
                 <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
                 <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
-                --namespace "${release_name}" \
+                --namespace "${release_name}"  --create-namespace \
                 "${release_name}" /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
             else
                helm del --purge "${release_name}" || true
@@ -787,6 +786,6 @@ jobs:
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
                 <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
                 --name "${release_name}" \
-                --namespace "${release_name}" \
+                --namespace "${release_name}"  --create-namespace \
                 /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
             fi
