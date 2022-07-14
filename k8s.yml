@@ -770,7 +770,7 @@ jobs:
                 --namespace "${release_name}"  --create-namespace \
                 "${release_name}" /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
             else
-               helm del --purge "${release_name}" || true
+               helm del "${release_name}" || true
                helm install \
                 --values << parameters.values_path >> \
                 <<# parameters.secrets_path >>--values << parameters.secrets_path >><</ parameters.secrets_path >> \
