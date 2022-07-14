@@ -771,7 +771,7 @@ jobs:
                 "${release_name}" /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
             else
                helm del "${release_name}" || true
-               helm install \
+               helm install "${release_name}" \
                 --values << parameters.values_path >> \
                 <<# parameters.secrets_path >>--values << parameters.secrets_path >><</ parameters.secrets_path >> \
                 --set "app.name=<< parameters.app_name >>" \
@@ -785,7 +785,6 @@ jobs:
                 <<# parameters.dry_run >>--dry-run<</ parameters.dry_run >> \
                 <<# parameters.force_upgrade >>--force<</ parameters.force_upgrade >> \
                 <<# parameters.helm_additional_params >><< parameters.helm_additional_params >><</ parameters.helm_additional_params >> \
-                --name "${release_name}" \
                 --namespace "${release_name}"  --create-namespace \
                 /tmp/out/<< parameters.helm_chart_name >>-<< parameters.helm_chart_version >>.tgz
             fi
