@@ -171,7 +171,7 @@ commands:
             echo 'export PATH=/usr/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
             echo $PATH
-            helm plugin install https://github.com/hypnoglow/helm-s3.git
+            helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.13.0
             <</ parameters.install_helm_s3_plugin >>
 
 jobs:
