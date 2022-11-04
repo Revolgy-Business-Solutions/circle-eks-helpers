@@ -1,0 +1,10 @@
+assignees:
+  - aleksgain
+  - Revolgy-Business-Solutions/operations
+labels:
+  - dependabot
+reviewers:
+  - aleksgain
+  - Revolgy-Business-Solutions/operations
+target-branch: main
+schedule: "weekly" # Options are (daily, weekly, monthly)
