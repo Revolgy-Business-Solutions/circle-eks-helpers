@@ -8,13 +8,13 @@ description: Kubernetes related commands and jobs
 executors:
   default:
     docker:
-      - image: alpine:3.10
+      - image: alpine:3.18.4
   build:
     docker:
-      - image: docker:19.03.13
+      - image: docker:24.0.7
   helm:
     docker:
-      - image: alpine/k8s:1.21.5
+      - image: alpine/k8s:1.27.7
 
 commands:
   configure_aws:
@@ -82,7 +82,7 @@ commands:
         default: current
       sops_release_url:
         type: string
-        default: https://github.com/mozilla/sops/releases/download/3.3.0/sops-3.3.0.linux
+        default: https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64
     steps:
       - run:
           name: download SOPS
@@ -141,7 +141,7 @@ commands:
     parameters:
       aws_authenticator_release_url:
         type: string
-        default: https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
+        default: https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.6.11/aws-iam-authenticator_0.6.11_linux_amd64
       install_aws_cli:
         type: boolean
         default: true
@@ -171,7 +171,7 @@ commands:
             echo 'export PATH=/usr/bin:$PATH' >> $BASH_ENV
             source $BASH_ENV
             echo $PATH
-            helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.13.0
+            helm plugin install https://github.com/hypnoglow/helm-s3.git --version 0.15.1
             <</ parameters.install_helm_s3_plugin >>
 
 jobs:
@@ -203,7 +203,7 @@ jobs:
       - checkout
       - pull_submodules
       - setup_remote_docker:
-          version: 19.03.13
+          version: 24.0.7
       - run:
           name: build docker image
           command: |
