@@ -11,7 +11,7 @@ executors:
       - image: alpine:3.18.4
   build:
     docker:
-      - image: docker:23.0.5
+      - image: docker:24.0.6
   helm:
     docker:
       - image: alpine/k8s:1.27.7
@@ -203,7 +203,7 @@ jobs:
       - checkout
       - pull_submodules
       - setup_remote_docker:
-          version: 23.0.5
+          version: 24.0.6
       - run:
           name: build docker image
           command: |
